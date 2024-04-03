@@ -1,0 +1,1 @@
+#para que models funcione como un paquete es necesario crear este archivo __init__.py
