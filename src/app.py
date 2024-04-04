@@ -47,3 +47,5 @@ if __name__ == "__main__":
     app.config.from_object(config['development']) #establece la configuracion a partir de un objeto, el ob ubicado en el archivo config.py
     app.run()
     
+#asdfgdsafgkhkñljgdfasfjk
+#asdfhgfdgstfghfdgsgfg
