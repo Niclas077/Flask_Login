@@ -2,10 +2,9 @@
 
 {% block title %} Administrador Home {% endblock %}
 
-
-
 {% block body %}
 
-<h1>Bienvenido usuario</h1>
+<h1>Bienvenido Admin  {{current_user.username}} !!!</h1>
+<a class="btn btn-secondary" href="{{url_for('logout')}}">Cerrar Sesion</a>
 
 {% endblock %}

@@ -3,16 +3,27 @@
 {% block title %} Login {% endblock %}
 
 {% block customCSS %}
-   <link  rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}" >
+<link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
 {% endblock %}
 
 {% block body %}
-
-
 <form class="form-signin" acction="/login" method="POST">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <img class="mb-3" src="{{url_for('static', filename='img/flasklogo.png')}}" alt="logo" width="300" height="150">
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
 
+    {% with messages = get_flashed_messages() %} <!--Trae los mensajes almacenados en el metodo get_flashed_mesages()-->
+    {% if messages %} <!--Comprueba de que existen mensajes-->
+    <br />
+    {% for mess in messages %}<!--Recorre mediante un for los mensajes que existen-->
+    <div class="alert alert-primary alert-dismissable" role="alert"><!--Crea un contenedor en la parte superior para mostrar el mensaje-->
+        <strong>{{mess}}</strong> <!--etiqueta para mostrar el mensaje-->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button><!--Boton para cerrar la ventana-->
+    </div>
+    {% endfor %}
+    {% endif%}
+    {% endwith %}
+
+    <h1 class="h3 mb-3 fw-normal" style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Login</h1>
     <div class="form-floating">
         <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="txtemail">
         <label for="floatingInput">Email address</label>
@@ -24,11 +35,11 @@
 
     <div class="checkbox mb-3">
         <label>
-            <input type="checkbox" value="remember-me"> Remember me
+            <input type="checkbox" value="remember-me"> Recordar
         </label>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar</button>
+
 </form>
 
 {% endblock %}
