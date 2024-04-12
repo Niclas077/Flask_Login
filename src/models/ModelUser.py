@@ -13,7 +13,7 @@ class ModelUser():
             if row != None:
                  user=User(row['id'], row['username'], User.check_password(row['password'], user.password), row['rol'])
                  return user
-                #en el campo de la contraseña que refiere a row[2] se valida un booleano para saber si la contraseña es valida o no, despues de ir al 
+                #en el campo de la contraseña que refiere a row[password] se valida un booleano para saber si la contraseña es valida o no, despues de ir al 
                 #metodo que genera el hash para la contraseña
                 #cada posicion en la variable row hace referencia a cada columna de mi tabla: id, username, etc
             else:
@@ -36,3 +36,93 @@ class ModelUser():
                 return None    
         except Exception as ex:
             raise Exception(ex)
+        
+        
+        
+    @classmethod
+    def registroU(self,db,user):
+        try:
+            cursor = db.connection.cursor()
+            sql = "INSERT INTO USUARIOS (username, password, rol) VALUES (%s, %s, %s)"
+            cursor.execute(sql, (user.username, User.hash_password_generate(user.password), user.rol))
+            db.connection.commit()
+            row=cursor.fetchone()
+            cursor.close()
+            return True
+                
+        except Exception as ex:
+            raise Exception(ex)
+        
+    @classmethod
+    def registroUA(self,db,user):
+        try:
+            cursor = db.connection.cursor()
+            sql = "INSERT INTO USUARIOS (id,username, password, rol) VALUES (%s,%s, %s, %s)"
+            cursor.execute(sql, (user.id,user.username, User.hash_password_generate(user.password), user.rol))
+            db.connection.commit()
+            row=cursor.fetchone()
+            cursor.close()
+            return True
+                
+        except Exception as ex:
+            raise Exception(ex)    
+        
+        
+    @classmethod
+    def eliminarU(self,db,user):
+        try:
+            cursor = db.connection.cursor()
+            cursor.execute("SELECT ID FROM USUARIOS WHERE ID=%s",(user.id,))
+            id=cursor.fetchone()
+            if id:
+                cursor.execute("DELETE FROM USUARIOS WHERE ID=%s",(user.id,)) #Se pone una coma para especificar que se pasa el parametro como una tupla
+                db.connection.commit()
+                cursor.close()
+                return True
+            else:
+                return False
+            
+        except Exception as ex:
+            raise Exception(ex)          
+        
+        
+    @classmethod
+    def rectpassword(self,db,user):
+        try:
+            cursor=db.connection.cursor()
+            cursor.execute("SELECT USERNAME, PASSWORD FROM USUARIOS WHERE USERNAME=%s",(user.username,))
+            usuario=cursor.fetchone() #Guarda los datos de la consulta para ser verificados en el if 
+            if usuario: #Si el usuario existe
+                cursor.execute("UPDATE USUARIOS SET PASSWORD=%s WHERE USERNAME=%s",(User.hash_password_generate(user.password),user.username))
+                db.connection.commit()
+                cursor.close()
+                return True
+            else:
+                return False
+        except Exception as ex:
+            raise Exception(ex)
+    
+    
+    @classmethod
+    def mostrarU(self,db):
+        try:
+            cursor=db.connection.cursor()
+            cursor.execute("SELECT *FROM USUARIOS")
+            usuarios = cursor.fetchall()
+            cursor.close()
+            return usuarios
+        except Exception as ex:
+            raise Exception(ex)
+        
+    @classmethod
+    def actualizar(self,db,user):
+        try:
+            cursor=db.connection.cursor()
+            cursor.execute("UPDATE USUARIOS SET USERNAME=%s,PASSWORD=%s,ROL=%s WHERE ID=%s", (user.username,User.hash_password_generate(user.password),user.rol,user.id))
+            db.connection.commit()
+            cursor.close()
+            return True
+        except Exception as ex:
+            raise Exception(ex)
+    
+    

@@ -1,0 +1,49 @@
+{% extends './base.html' %}
+
+{% block title %} Administrador Home {% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/formulario.css')}}">
+{% endblock %}
+
+{% block body %}
+{% include ('./administradores/cabeceraA.html') %}
+<div class="bienvenida well bg-light">
+    <div class="container">
+        <div class="row"> <!--define una columna -->
+            <div class="bg-white shadow rounded col-lg-8 offset-lg-1">
+                <!--esta linea establece la posiciones del contenedor -->
+                <div class="row">
+                    <div class="col-md-7 pe-3">
+                        <div class="form-left h-100 py-5 px-2">
+                            <div class="col-12">
+                                <h1>Bienvenido Administrador {{current_user.username}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 ps-4 d-none d-md-block">
+                        <div class="form-right h-100 text-center pt-5">
+                            <img src="../static/img/programador.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+    <script>
+        // Llama a la función notificacionSwal después de que se cargue la página
+        document.addEventListener('DOMContentLoaded', function() {
+            notificacionSwalf("Bienvenido", "{{ current_user.username }}", "success", "Ok");
+        });
+    </script>
+            
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+   <!--SweetAlert-->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <!--Archivos de configuracion js-->
+   <script src="{{url_for('static',filename='js/alerts.js')}}"></script>
+{% endblock %}

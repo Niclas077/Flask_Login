@@ -1,0 +1,76 @@
+{% extends './base.html' %}
+
+{% block title %} Usuarios {% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Brush+Script+MT&display=swap">
+<link rel="stylesheet" href="{{url_for('static', filename='css/formulario.css')}}">
+{% endblock %}
+
+
+
+{% block body %}
+{% include ('./administradores/cabeceraA.html') %}
+
+<div style="margin-top: 30px;">
+    <h1 style="text-align: center; font-family: 'Luminari', cursive "><em>Lista de Usuarios</em></h1>
+</div>
+
+{% if success_message and id %}
+  {% if success_message == 'True' %}
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      notificacionSwalf("Actualización Exitosa","Los datos del usuario N° {{id}} fueron actualizados con exito","success","Ok")
+    });
+  </script>
+  {% else %} 
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      notificacionSwalf("Actualización Fallida","Los datos del usuario N° {{id}} no fueron actualizados","error","Ok")
+    });
+  </script>
+  {% endif %}
+{% endif %}
+
+    {% if usuarios %}
+    <div class="tbusuarios">
+        <table class="table table-sm">
+            <thead class="table-dark table-sm">
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">USERNAME</th>
+                <th scope="col">ROL</th>
+                <th scope="col">MODIFICACIONES</th>
+              </tr>
+            </thead>
+            <tbody >
+                {% for listar in usuarios %}
+              <tr>
+                <td>{{listar.id}}</td>
+                <td>{{listar.username}}</td>
+                <td>{{listar.rol}}</td>
+                <td>
+                    <a class="btn btn-sm btn-warning btn-block" href="/ActU/{{listar.id}}">Actualizar</a>
+                    <a class="btn btn-sm btn-danger btn-block" href="/ElimU/{{listar.id}}">Eliminar</a>
+                </td>
+
+              </tr>
+              <tr>
+                {% endfor %}
+            </tbody>
+          </table>
+
+    {% else %}
+    <p>No existen usuarios registrados</p>
+    {% endif %}
+
+    <a class="w-15 btn btn-lg btn-success" style="text-align: left;" href="/Añadir"  type="button">Añadir</a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script>
+   <!--SweetAlert-->
+   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <!--Archivos de configuracion js-->
+   <script src="{{url_for('static',filename='js/alerts.js')}}"></script>
+{% endblock %}

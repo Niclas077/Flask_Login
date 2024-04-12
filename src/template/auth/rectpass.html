@@ -1,0 +1,75 @@
+{% extends './base.html' %}
+
+{% block title %}Recuperación{% endblock %}
+
+
+{% block customCSS %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+<link rel="stylesheet" href="{{url_for('static', filename='css/formulario.css')}}">
+{% endblock %}
+
+{% block body %}
+<div class="registro bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <h3 class="mb-3" style="font-style: oblique;">Formulario de Recuperacion de Contraseña</h3>
+                <div class="bg-white shadow rounded">
+                    <div class="row">
+                        <div class="col-md-7 pe-0">
+                            <div class="form-left h-100 py-5 px-5">
+                                {% with messages = get_flashed_messages() %}
+                                <!--Trae los mensajes almacenados en el metodo get_flashed_mesages()-->
+                                {% if messages %} <!--Comprueba de que existen mensajes-->
+                                <br />
+                                {% for mess in messages %}<!--Recorre mediante un for los mensajes que existen-->
+                                <div class="alert alert-warning alert-dismissable" role="alert">
+                                    <!--Crea un contenedor en la parte superior para mostrar el mensaje-->
+                                    <strong>{{mess}}</strong> <!--etiqueta para mostrar el mensaje-->
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button><!--Boton para cerrar la ventana-->
+                                </div>
+                                {% endfor %}
+                                {% endif%}
+                                {% endwith %}
+                                <form action="restaurarP" class="row g-4" method="post">
+                                    <div class="col-12">
+                                        <label>Ingrese Usuario<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="bi bi-person-fill"></i></div>
+                                            <input type="text" class="form-control" placeholder="ejemplo@gmail.com"
+                                                name="txtusuario">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label>Ingrese Nueva Contraseña<span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="bi bi-lock-fill"></i></div>
+                                            <input type="password" class="form-control" placeholder="Enter New Password"
+                                                name="txtcontraseña">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit"
+                                            class="btn btn-primary px-4 float-end mt-4">Restarurar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-md-5 ps-0 d-none d-md-block">
+                            <div class="form-right h-100 bg-primary text-white text-center pt-5">
+                                <i class="box bi-shield-lock"></i>
+                                <h2 class="fs-1">Recuperación de Contraseña</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-end text-secondary mt-3">Bootstrap 5 Design</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
