@@ -126,7 +126,7 @@ def AdminU():
     usuarios = ModelUser.mostrarU(db)
     return render_template('./administradores/AdministrarU.html',usuarios=usuarios,success_message=success_message, id=id)   
        
-  
+
 @app.route('/ElimU/<int:id>')
 @login_required  
 def ElimU(id):
@@ -146,10 +146,41 @@ def Añadir():
 def recuperar():
     return render_template('./auth/rectpass.html')   
 
+
+#Vistas del usuario
 @app.route('/HUsuario')
 @login_required
 def HUsuario():
-    return render_template('./usuarios/homeU.html')
+    return render_template('./usuarios/index.html')
+
+@app.route('/about')
+@login_required
+def about():
+    return render_template('./usuarios/about.html')
+
+@app.route('/contact')
+@login_required
+def contact():
+    return render_template('./usuarios/contact.html')
+
+
+@app.route('/gallery')
+@login_required
+def gallery():
+    return render_template('./usuarios/gallery.html')
+
+
+@app.route('/service')
+@login_required
+def services():
+    return render_template('./usuarios/service.html')
+
+
+@app.route('/testimonial')
+@login_required
+def testimonial():
+    return render_template('./usuarios/testimonial.html')
+
 
 @app.route('/registro')
 def registro():
